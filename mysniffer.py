@@ -7,10 +7,9 @@ class Sniff:
 
     @staticmethod
     def sniffer(pkt):
-        print("[" + str(Sniff.i) + "]\tSource IP:%s  TO  Dest IP: %s  |  Source MAC:%s  TO  Dest MAC: %s  |  Proto: "
-                                   "%s  |  PORT: %s\n" % (pkt[IP].src, pkt[IP].dst,pkt[Ether].src,pkt[Ether].dst,
-                                                          pkt[IP].proto, pkt[IP].dport))
-        Sniff.i += 1
+        if pkt.haslayer(IP):
+            print("[" + str(Sniff.i) + "]\tSource IP: %s  TO  Dest IP: %s  |  Source MAC: %s  TO  Dest MAC: %s  |  Proto: %s  |  PORT: %s\n" % (pkt[IP].src, pkt[IP].dst,pkt[Ether].src,pkt[Ether].dst,pkt[IP].proto, pkt[IP].dport))
+            Sniff.i += 1
 
 
 if __name__ == '__main__':
@@ -25,7 +24,7 @@ if __name__ == '__main__':
 #**********************************************************************
 
     print "########Press ctrl + c to stop collecting packets!!!!!!!\n"
-    for i in range(3,0,-1):
+    for i in range(3, 0, -1):
         print "Packet Listening will start in ", i, " seconds....."
         sleep(1)
 
